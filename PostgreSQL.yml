@@ -1,0 +1,26 @@
+ ---
+- name: Configure PostgreSQL on Amazon Linux
+  hosts: database
+  become: true  # Run as sudo
+
+ tasks:
+   - name: Ensure PostgreSQL service is running
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Create PostgreSQL Database
+      postgresql_db:
+        name: mydatabase
+        state: present
+
+    - name: Create PostgreSQL User
+      postgresql_user:
+        name: admin
+        password: admin123
+        db: mydatabase
+        priv: ALL
+        state: present
+  
+  ...
